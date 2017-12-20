@@ -148,7 +148,7 @@
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration {
     MSHTTPSessionManager *sessionManager = [[MSHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
-    sessionManager.responseSerializer = [AFImageResponseSerializer serializer];
+    sessionManager.responseSerializer = [MSImageResponseSerializer serializer];
 
     return [self initWithSessionManager:sessionManager
                  downloadPrioritization:AFImageDownloadPrioritizationFIFO

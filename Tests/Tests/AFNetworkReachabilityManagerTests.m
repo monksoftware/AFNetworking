@@ -21,7 +21,7 @@
 
 #import "AFTestCase.h"
 
-#import "AFNetworkReachabilityManager.h"
+#import "MSNetworkReachabilityManager.h"
 #import <netinet/in.h>
 
 @interface AFNetworkReachabilityManagerTests : AFTestCase
@@ -63,7 +63,7 @@
                               object:nil
                              handler:^BOOL(NSNotification *note) {
                                  AFNetworkReachabilityStatus status;
-                                 status = [note.userInfo[AFNetworkingReachabilityNotificationStatusItem] integerValue];
+                                 status = [note.userInfo[MSNetworkingReachabilityNotificationStatusItem] integerValue];
                                  BOOL isReachable = (status == AFNetworkReachabilityStatusReachableViaWiFi
                                                      || status == AFNetworkReachabilityStatusReachableViaWWAN);
                                  return isReachable;

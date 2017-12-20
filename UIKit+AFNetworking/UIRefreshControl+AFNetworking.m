@@ -66,18 +66,18 @@
 - (void)setRefreshingWithStateOfTask:(NSURLSessionTask *)task {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
-    [notificationCenter removeObserver:self name:AFNetworkingTaskDidResumeNotification object:nil];
-    [notificationCenter removeObserver:self name:AFNetworkingTaskDidSuspendNotification object:nil];
-    [notificationCenter removeObserver:self name:AFNetworkingTaskDidCompleteNotification object:nil];
+    [notificationCenter removeObserver:self name:MSNetworkingTaskDidResumeNotification object:nil];
+    [notificationCenter removeObserver:self name:MSNetworkingTaskDidSuspendNotification object:nil];
+    [notificationCenter removeObserver:self name:MSNetworkingTaskDidCompleteNotification object:nil];
 
     if (task) {
         UIRefreshControl *refreshControl = self.refreshControl;
         if (task.state == NSURLSessionTaskStateRunning) {
             [refreshControl beginRefreshing];
 
-            [notificationCenter addObserver:self selector:@selector(af_beginRefreshing) name:AFNetworkingTaskDidResumeNotification object:task];
-            [notificationCenter addObserver:self selector:@selector(af_endRefreshing) name:AFNetworkingTaskDidCompleteNotification object:task];
-            [notificationCenter addObserver:self selector:@selector(af_endRefreshing) name:AFNetworkingTaskDidSuspendNotification object:task];
+            [notificationCenter addObserver:self selector:@selector(af_beginRefreshing) name:MSNetworkingTaskDidResumeNotification object:task];
+            [notificationCenter addObserver:self selector:@selector(af_endRefreshing) name:MSNetworkingTaskDidCompleteNotification object:task];
+            [notificationCenter addObserver:self selector:@selector(af_endRefreshing) name:MSNetworkingTaskDidSuspendNotification object:task];
         } else {
             [refreshControl endRefreshing];
         }
@@ -103,9 +103,9 @@
 - (void)dealloc {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
-    [notificationCenter removeObserver:self name:AFNetworkingTaskDidCompleteNotification object:nil];
-    [notificationCenter removeObserver:self name:AFNetworkingTaskDidResumeNotification object:nil];
-    [notificationCenter removeObserver:self name:AFNetworkingTaskDidSuspendNotification object:nil];
+    [notificationCenter removeObserver:self name:MSNetworkingTaskDidCompleteNotification object:nil];
+    [notificationCenter removeObserver:self name:MSNetworkingTaskDidResumeNotification object:nil];
+    [notificationCenter removeObserver:self name:MSNetworkingTaskDidSuspendNotification object:nil];
 }
 
 @end

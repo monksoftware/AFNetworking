@@ -216,7 +216,7 @@
 #pragma mark - Helper Methods
 
 - (void)testQueryStringFromParameters {
-    XCTAssertTrue([AFQueryStringFromParameters(@{@"key":@"value",@"key1":@"value&"}) isEqualToString:@"key=value&key1=value%26"]);
+    XCTAssertTrue([MSQueryStringFromParameters(@{@"key":@"value",@"key1":@"value&"}) isEqualToString:@"key=value&key1=value%26"]);
 }
 
 - (void)testPercentEscapingString {

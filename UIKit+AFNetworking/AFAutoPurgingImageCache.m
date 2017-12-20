@@ -25,7 +25,7 @@
 
 #import "AFAutoPurgingImageCache.h"
 
-@interface AFCachedImage : NSObject
+@interface MSCachedImage : NSObject
 
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) NSString *identifier;
@@ -35,7 +35,7 @@
 
 @end
 
-@implementation AFCachedImage
+@implementation MSCachedImage
 
 -(instancetype)initWithImage:(UIImage *)image identifier:(NSString *)identifier {
     if (self = [self init]) {
@@ -65,7 +65,7 @@
 @end
 
 @interface AFAutoPurgingImageCache ()
-@property (nonatomic, strong) NSMutableDictionary <NSString* , AFCachedImage*> *cachedImages;
+@property (nonatomic, strong) NSMutableDictionary <NSString* , MSCachedImage*> *cachedImages;
 @property (nonatomic, assign) UInt64 currentMemoryUsage;
 @property (nonatomic, strong) dispatch_queue_t synchronizationQueue;
 @end
@@ -109,9 +109,9 @@
 
 - (void)addImage:(UIImage *)image withIdentifier:(NSString *)identifier {
     dispatch_barrier_async(self.synchronizationQueue, ^{
-        AFCachedImage *cacheImage = [[AFCachedImage alloc] initWithImage:image identifier:identifier];
+        MSCachedImage *cacheImage = [[MSCachedImage alloc] initWithImage:image identifier:identifier];
 
-        AFCachedImage *previousCachedImage = self.cachedImages[identifier];
+        MSCachedImage *previousCachedImage = self.cachedImages[identifier];
         if (previousCachedImage != nil) {
             self.currentMemoryUsage -= previousCachedImage.totalBytes;
         }
@@ -123,14 +123,14 @@
     dispatch_barrier_async(self.synchronizationQueue, ^{
         if (self.currentMemoryUsage > self.memoryCapacity) {
             UInt64 bytesToPurge = self.currentMemoryUsage - self.preferredMemoryUsageAfterPurge;
-            NSMutableArray <AFCachedImage*> *sortedImages = [NSMutableArray arrayWithArray:self.cachedImages.allValues];
+            NSMutableArray <MSCachedImage*> *sortedImages = [NSMutableArray arrayWithArray:self.cachedImages.allValues];
             NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastAccessDate"
                                                                            ascending:YES];
             [sortedImages sortUsingDescriptors:@[sortDescriptor]];
 
             UInt64 bytesPurged = 0;
 
-            for (AFCachedImage *cachedImage in sortedImages) {
+            for (MSCachedImage *cachedImage in sortedImages) {
                 [self.cachedImages removeObjectForKey:cachedImage.identifier];
                 bytesPurged += cachedImage.totalBytes;
                 if (bytesPurged >= bytesToPurge) {
@@ -145,7 +145,7 @@
 - (BOOL)removeImageWithIdentifier:(NSString *)identifier {
     __block BOOL removed = NO;
     dispatch_barrier_sync(self.synchronizationQueue, ^{
-        AFCachedImage *cachedImage = self.cachedImages[identifier];
+        MSCachedImage *cachedImage = self.cachedImages[identifier];
         if (cachedImage != nil) {
             [self.cachedImages removeObjectForKey:identifier];
             self.currentMemoryUsage -= cachedImage.totalBytes;
@@ -170,7 +170,7 @@
 - (nullable UIImage *)imageWithIdentifier:(NSString *)identifier {
     __block UIImage *image = nil;
     dispatch_sync(self.synchronizationQueue, ^{
-        AFCachedImage *cachedImage = self.cachedImages[identifier];
+        MSCachedImage *cachedImage = self.cachedImages[identifier];
         image = [cachedImage accessImage];
     });
     return image;

@@ -21,20 +21,20 @@
 
 #import "AFTestCase.h"
 
-#import "AFURLRequestSerialization.h"
+#import "MSURLRequestSerialization.h"
 
-@interface AFMultipartBodyStream : NSInputStream <NSStreamDelegate>
+@interface MSMultipartBodyStream : NSInputStream <NSStreamDelegate>
 @property (readwrite, nonatomic, strong) NSMutableArray *HTTPBodyParts;
 @end
 
 @protocol AFMultipartFormDataTest <AFMultipartFormData>
-@property (readwrite, nonatomic, strong) AFMultipartBodyStream *bodyStream;
+@property (readwrite, nonatomic, strong) MSMultipartBodyStream *bodyStream;
 
 - (instancetype)initWithURLRequest:(NSMutableURLRequest *)urlRequest
                     stringEncoding:(NSStringEncoding)encoding;
 @end
 
-@interface AFHTTPBodyPart : NSObject
+@interface MSHTTPBodyPart : NSObject
 @property (nonatomic, assign) NSStringEncoding stringEncoding;
 @property (nonatomic, strong) NSDictionary *headers;
 @property (nonatomic, copy) NSString *boundary;
@@ -145,7 +145,7 @@
 
     [formData appendPartWithFileURL:fileURL name:@"test" error:NULL];
 
-    AFHTTPBodyPart *part = [formData.bodyStream.HTTPBodyParts firstObject];
+    MSHTTPBodyPart *part = [formData.bodyStream.HTTPBodyParts firstObject];
 
     XCTAssertTrue([part.headers[@"Content-Type"] isEqualToString:@"application/x-x509-ca-cert"], @"MIME Type has not been obtained correctly (%@)", part.headers[@"Content-Type"]);
 }

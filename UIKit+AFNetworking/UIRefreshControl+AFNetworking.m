@@ -25,7 +25,7 @@
 
 #if TARGET_OS_IOS
 
-#import "AFURLSessionManager.h"
+#import "MSURLSessionManager.h"
 
 @interface AFRefreshControlNotificationObserver : NSObject
 @property (readonly, nonatomic, weak) UIRefreshControl *refreshControl;

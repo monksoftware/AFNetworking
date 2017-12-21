@@ -1,4 +1,4 @@
-// AFPropertyListResponseSerializerTests.m
+// MSPropertyListResponseSerializerTests.m
 // Copyright (c) 2011–2016 Alamofire Software Foundation ( http://alamofire.org/ )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,15 +23,15 @@
 
 #import "AFURLResponseSerialization.h"
 
-@interface AFPropertyListResponseSerializerTests : AFTestCase
-@property (nonatomic, strong) AFPropertyListResponseSerializer *responseSerializer;
+@interface MSPropertyListResponseSerializerTests : AFTestCase
+@property (nonatomic, strong) MSPropertyListResponseSerializer *responseSerializer;
 @end
 
-@implementation AFPropertyListResponseSerializerTests
+@implementation MSPropertyListResponseSerializerTests
 
 - (void)setUp {
     [super setUp];
-    self.responseSerializer = [AFPropertyListResponseSerializer serializer];
+    self.responseSerializer = [MSPropertyListResponseSerializer serializer];
 }
 
 #pragma mark -
@@ -72,7 +72,7 @@
     [self.responseSerializer setFormat:NSPropertyListXMLFormat_v1_0];
     [self.responseSerializer setReadOptions:NSPropertyListMutableContainers];
 
-    AFPropertyListResponseSerializer *copiedSerializer = [self.responseSerializer copy];
+    MSPropertyListResponseSerializer *copiedSerializer = [self.responseSerializer copy];
     XCTAssertNotNil(copiedSerializer);
     XCTAssertNotEqual(copiedSerializer, self.responseSerializer);
     XCTAssertEqual(copiedSerializer.format, self.responseSerializer.format);
@@ -84,7 +84,7 @@
 - (void)testResponseSerializerCanBeArchivedAndUnarchived {
     NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:self.responseSerializer];
     XCTAssertNotNil(archive);
-    AFPropertyListResponseSerializer *unarchivedSerializer = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
+    MSPropertyListResponseSerializer *unarchivedSerializer = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
     XCTAssertNotNil(unarchivedSerializer);
     XCTAssertNotEqual(unarchivedSerializer, self.responseSerializer);
     XCTAssertTrue(unarchivedSerializer.format == self.responseSerializer.format);

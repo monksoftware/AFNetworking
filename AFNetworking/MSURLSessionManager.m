@@ -486,7 +486,7 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
 
     self.session = [NSURLSession sessionWithConfiguration:self.sessionConfiguration delegate:self delegateQueue:self.operationQueue];
 
-    self.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.responseSerializer = [MSJSONResponseSerializer serializer];
 
     self.securityPolicy = [MSSecurityPolicy defaultPolicy];
 

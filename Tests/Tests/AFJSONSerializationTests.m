@@ -94,14 +94,14 @@ static NSData * AFJSONTestData() {
 #pragma mark -
 
 @interface AFJSONResponseSerializationTests : AFTestCase
-@property (nonatomic, strong) AFJSONResponseSerializer *responseSerializer;
+@property (nonatomic, strong) MSJSONResponseSerializer *responseSerializer;
 @end
 
 @implementation AFJSONResponseSerializationTests
 
 - (void)setUp {
     [super setUp];
-    self.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.responseSerializer = [MSJSONResponseSerializer serializer];
 }
 
 #pragma mark -
@@ -197,7 +197,7 @@ static NSData * AFJSONTestData() {
     [self.responseSerializer setReadingOptions:NSJSONReadingMutableLeaves];
     [self.responseSerializer setRemovesKeysWithNullValues:YES];
 
-    AFJSONResponseSerializer *copiedSerializer = [self.responseSerializer copy];
+    MSJSONResponseSerializer *copiedSerializer = [self.responseSerializer copy];
     XCTAssertNotEqual(copiedSerializer, self.responseSerializer);
     XCTAssertEqual(copiedSerializer.acceptableStatusCodes, self.responseSerializer.acceptableStatusCodes);
     XCTAssertEqual(copiedSerializer.acceptableContentTypes, self.responseSerializer.acceptableContentTypes);

@@ -79,7 +79,7 @@
     self.baseURL = url;
 
     self.requestSerializer = [MSHTTPRequestSerializer serializer];
-    self.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.responseSerializer = [MSJSONResponseSerializer serializer];
 
     return self;
 }
